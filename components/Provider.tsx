@@ -9,8 +9,8 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
       mode="payment"
       cartMode="client-only"
       stripe={process.env.NEXT_PUBLIC_STRIPE_KEY as string}
-      successUrl="http://localhost:3000/success"
-      cancelUrl="http://localhost:3000/error"
+      successUrl="https://hakathon3-market-place-food-web.vercel.app/success"
+      cancelUrl="https://hakathon3-market-place-food-web.vercel.app/error"
       currency="USD"
       billingAddressCollection={false}
       shouldPersist={true}

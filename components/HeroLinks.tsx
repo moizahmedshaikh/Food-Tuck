@@ -20,7 +20,7 @@ function HeroLinks({heading, url1, url2}:Props) {
               {url1}
             </Link>
             <span className='text-white'>/</span>
-            <Link href="/about" className='text-[#FF9F0D]'>
+            <Link href="" className='text-[#FF9F0D]'>
               {url2}
             </Link>
           </div>

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import HeroLinks from "@/components/HeroLinks";
 import Nav2 from "@/components/Nav2";
@@ -7,36 +7,50 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { useShoppingCart } from "use-shopping-cart";
 import { useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
+import Checkout from "@/components/action";
 
-const Checkout = () => {
+const Checkouts = () => {
   const router = useRouter();
 
   const { cartDetails, totalPrice, redirectToCheckout } = useShoppingCart();
-   
-  
+  const { user } = useUser();
+  console.log("user_Id clerk ki✨", user?.id);
+
   console.log(cartDetails);
   const [selectPaymentMethod, setSelectPaymentMethod] = useState("cash");
   const [loading, setLoading] = useState(false);
 
   const [formValues, setFormValues] = useState({
-    firstName: "",
+    name: "",
     email: "",
+    city: "",
+    phone: "",
+    address: "",
   });
 
   const isFormValid = Object.values(formValues).every(
     (value) => value.trim() !== ""
   );
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-    setFormValues({ ...formValues, [id]: value });
-  };
-
   const handlePlaceOrder = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!isFormValid) {
-      alert("Please fill all the required fields.");
-      return;
+    setLoading(true); // ⏳ Start Loader
+
+    try {
+      await Checkout(
+        Object.values(cartDetails ?? {}),
+        formValues,
+        totalPrice,
+        user?.id
+      ); // Payment method nahi pass kar raha
+      setTimeout(() => {
+        setLoading(false); // ⏹ Stop Loader
+        router.push("/success"); // ✅ Navigate after order creation
+      }, 2000);
+    } catch (error) {
+      console.error("Checkout Error:", error);
+      setLoading(false);
     }
 
     if (selectPaymentMethod === "card") {
@@ -61,7 +75,7 @@ const Checkout = () => {
       <HeroLinks heading="Checkout Page" url1="Home" url2="Checkout" />
 
       <form
-        onSubmit={(e) => handlePlaceOrder(e)}
+        onSubmit={handlePlaceOrder}
         className="min-h-screen bg-gray-100 flex flex-col items-center py-10 px-4 md:px-10"
       >
         <div className="max-w-6xl w-full bg-white rounded-lg flex flex-col md:flex-row">
@@ -76,8 +90,10 @@ const Checkout = () => {
                 <label htmlFor="firstName">Fisrt name</label>
                 <input
                   id="firstName"
-                  value={formValues.firstName}
-                  onChange={handleInputChange}
+                  value={formValues.name}
+                  onChange={(e) =>
+                    setFormValues({ ...formValues, name: e.target.value })
+                  }
                   type="text"
                   className="p-3 border focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
@@ -96,7 +112,9 @@ const Checkout = () => {
                 <label htmlFor="email">Email</label>
                 <input
                   value={formValues.email}
-                  onChange={handleInputChange}
+                  onChange={(e) =>
+                    setFormValues({ ...formValues, email: e.target.value })
+                  }
                   id="email"
                   type="email"
                   className="p-3 border focus:outline-none focus:ring-2 focus:ring-orange-500"
@@ -108,55 +126,31 @@ const Checkout = () => {
                 <input
                   id="tel"
                   type="tel"
+                  value={formValues.phone}
+                  onChange={(e) =>
+                    setFormValues({ ...formValues, phone: e.target.value })
+                  }
                   className="p-3 border focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
               </div>
-
-              {/* <div className="flex flex-col">
-                <label htmlFor="company">Company</label>
-                <input
-                  id="company"
-                  type="text"
-                  className="p-3 border focus:outline-none focus:ring-2 focus:ring-orange-500"
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <p>Choose country</p>
-                <select className="p-3 border focus:outline-none focus:ring-2 focus:ring-orange-500">
-                  <option>Choose country</option>
-                  <option>USA</option>
-                  <option>Pakistan</option>
-                </select>
-              </div> */}
-
-              {/*<div className="flex flex-col">
-                <p>City</p>
-                <select className="p-3 border focus:outline-none focus:ring-2 focus:ring-orange-500">
-                  <option>Choose city</option>
-                  <option>Karachi</option>
-                  <option>Lahore</option>
-                </select>
-               </div>
-
-               <div className="flex flex-col">
-                <label htmlFor="zip">Zip code</label>
-                <input
-                  id="zip"
-                  type="text"
-                  className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-                />
-              </div>*/}
 
               <input
                 type="text"
-                placeholder="Address 1"
+                placeholder="City"
+                value={formValues.city}
+                onChange={(e) =>
+                  setFormValues({ ...formValues, city: e.target.value })
+                }
                 className="col-span-1 md:col-span-2 p-3 border focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
 
               <input
                 type="text"
-                placeholder="Address 2"
+                placeholder="Address"
+                value={formValues.address}
+                onChange={(e) =>
+                  setFormValues({ ...formValues, address: e.target.value })
+                }
                 className="col-span-1 md:col-span-2 p-3 border focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
@@ -205,7 +199,7 @@ const Checkout = () => {
                 <span>Shipping</span>
                 <span>Free</span>
               </div>
-              
+
               <div className="flex justify-between text-sm">
                 <span>Tax</span>
                 <span>$0</span>
@@ -248,7 +242,6 @@ const Checkout = () => {
             </div>
 
             <button
-            
               type="submit"
               disabled={!isFormValid || loading}
               className={`mt-6 w-full font-bold py-3 rounded-sm ${
@@ -266,4 +259,4 @@ const Checkout = () => {
   );
 };
 
-export default Checkout;
+export default Checkouts;

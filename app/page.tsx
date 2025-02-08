@@ -1,3 +1,5 @@
+
+
 import AbountUs from "@/components/AboutUs";
 import Hero from "@/components/Hero";
 import MenuSec from "@/components/MenuSec";
@@ -10,6 +12,13 @@ import FoodSection from "@/components/FoodSection";
 import BlogPage from "@/components/BlogPage";
 
 export default function Home() {
+
+//   const {user} = useUser()
+
+// console.log("user",user)
+// console.log(user?.emailAddresses[0].emailAddress)
+// console.log(user?.id)
+
   return (
     <div className="bg-[#0D0D0D]">
       <Navbar />
