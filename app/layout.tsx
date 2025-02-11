@@ -14,6 +14,7 @@ const font = Inter({
 export const metadata: Metadata = {
   title: "Food Tuck",
   description: "Fast Food Items here ",
+  icons:"/cap.png"
 };
 
 export default function RootLayout({

@@ -1,7 +1,3 @@
-
-
-
-
 "use client";
 
 import HeroLinks from "@/components/HeroLinks";
@@ -13,15 +9,14 @@ import Image from "next/image";
 
 const SignUp = () => {
   const router = useRouter();
-  const { isLoaded, signUp } = useSignUp(); // ✅ Clerk ka signup hook
+  const { isLoaded, signUp } = useSignUp(); 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [verificationCode, setVerificationCode] = useState(""); // ✅ Verification Code Input
+  const [verificationCode, setVerificationCode] = useState(""); 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isVerificationStep, setIsVerificationStep] = useState(false); // ✅ Track Verification Step
+  const [isVerificationStep, setIsVerificationStep] = useState(false); 
 
-  // ✅ SignUp Function
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -43,7 +38,7 @@ const SignUp = () => {
 
       if (result.status === "complete") {
         // ✅ Redirect to signin page instead of setting active session
-        router.push("/signin");
+        // router.push("/signin");
       } else {
         await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
         setIsVerificationStep(true); // ✅ Show verification input
@@ -84,8 +79,9 @@ const SignUp = () => {
       console.log("Verification Result:", result);
 
       if (result.status === "complete") {
-        // ✅ Redirect to signin page instead of setting active session
-        router.push("/signin");
+        sessionStorage.setItem("signupCompleted", "true");   
+        router.push("/shop");
+        
       } else {
         setError("Invalid verification code. Please try again.");
       }

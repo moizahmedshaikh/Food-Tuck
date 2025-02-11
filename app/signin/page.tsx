@@ -19,7 +19,7 @@ const Signin = () => {
   const handleSignIn = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    // If the user is already signed in, redirect them to the dashboard
+    
     if (user) {
       router.push("/");
       return;
@@ -169,7 +169,7 @@ const Signin = () => {
               alt="Google"
               className="w-5 h-5 mr-2"
             />
-            Sign up with Google
+            Sign in with Google
           </button>
 
           {/* <SignInButton mode="modal">

@@ -8,6 +8,7 @@ import Link from "next/link";
 import { client } from "@/sanity/lib/client";
 import { IoSearch } from "react-icons/io5";
 
+
 type Product = {
   name: string;
   price: number;
@@ -24,6 +25,8 @@ const Shop = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+
+
 
   useEffect(() => {
     const fetchData = async () => {

@@ -1,7 +1,4 @@
 
-
-
-
 "use client";
 
 import Link from "next/link";
@@ -44,11 +41,12 @@ const Nav2 = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="flex gap-3 items-center">
+          <div className="flex gap-2 items-center">
             <IoSearch size={25} className="text-white w-6 lg:block hidden" />
 
             {/* Clerk User Icon (Sign in / Profile) */}
-            <div className="lg:block hidden cursor-pointer">
+
+            <div className="cursor-pointer pt-1">
               {isSignedIn ? <UserButton afterSignOutUrl="/" /> : <Link href="/signin"><UserIcon className="text-white w-6" /></Link>}
             </div>
 
@@ -86,9 +84,9 @@ const Nav2 = () => {
                   </Link>
 
                   {/* Mobile User Authentication */}
-                  <div className="cursor-pointer">
-                    {isSignedIn ? <UserButton afterSignOutUrl="/" /> : <Link href="/sign-in"><UserIcon className="text-black w-9" /></Link>}
-                  </div>
+                  {/* <div className="cursor-pointer">
+                    {isSignedIn ?  <UserButton afterSignOutUrl="/" /> : <Link href="/sign-in"><UserIcon className="text-black w-9" /></Link>}
+                  </div> */}
 
                   {/* Search Bar */}
                   <div className="relative">
