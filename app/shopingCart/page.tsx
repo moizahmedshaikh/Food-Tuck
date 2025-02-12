@@ -76,7 +76,7 @@ const ShoppingCart = () => {
       <HeroLinks heading="Shoping Cart" url1="Home" url2="Shopping Cart" />
 
       {cartCount === 0 ? (
-        <h1 className="text-black font-bold flex justify-center text-4xl py-16 ">
+        <h1 className="text-black font-bold flex justify-center lg:text-4xl md:text-3xl sm:text-2xl text-xl  py-16 ">
           You Dont Have Any Items
         </h1>
       ) : (

@@ -34,6 +34,9 @@ const Nav2 = () => {
             <li className="flex items-center"><Link href={"/about"}>About</Link><IoIosArrowDown /></li>
             <li><Link href={"/shop"}>Shop</Link></li>
             <li><Link href={"/contact"}>Contact</Link></li>
+            <li>
+            {isSignedIn ? <Link href={"/orders"}>Orders</Link> : ""}
+            </li>
           </ul>
           <h1 className="font-[700] lg:hidden flex text-center text-[27px] leading-[34px]">
             <span className="text-textp">Food</span>tuck

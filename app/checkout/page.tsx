@@ -46,8 +46,8 @@ const Checkouts = () => {
       ); // Payment method nahi pass kar raha
       setTimeout(() => {
         setLoading(false); // ⏹ Stop Loader
-        router.push("/success"); // ✅ Navigate after order creation
-      }, 2000);
+        // router.push("/success"); // ✅ Navigate after order creation
+      }, 1000);
     } catch (error) {
       console.error("Checkout Error:", error);
       setLoading(false);
